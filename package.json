@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.js",
+    "start": "tsc && node server.js",
     "typings": "typings",
     "tsWatch": "tsc -w",
     "tsBuild": "tsc",
