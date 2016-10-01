@@ -15,9 +15,5 @@ node_modules/
 .idea/
 .vscode/
 typings/*/*
-*.js
-!docs/gen/**/*.js
 *.map
-!gulpfile.js
-
 /tmp
