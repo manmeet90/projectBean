@@ -4,17 +4,20 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "postinstall": "typings install && tsc",
     "typings": "typings",
     "tsWatch": "tsc -w",
     "tsBuild": "tsc",
-    "tsdinstall": "tsd reinstall --save",
+    "tsdinstall": "typings install",
     "lint": "gulp tslint"
   },
   "config": {
     "ghooks": {
       "pre-commit": "gulp tslint"
     }
+  },
+  "engines": {
+    "node": "6.7.0",
+    "npm": "3.10.6"
   },
   "dependencies": {
     "aws-sdk": "2.3.0",
