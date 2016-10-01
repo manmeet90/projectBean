@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 @Component({
-  selector: 'my-app',
+  selector: 'project-bean-app',
   templateUrl: 'public/app/components/app/app.component.html'
 })
 export class AppComponent { 
