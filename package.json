@@ -13,8 +13,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "gulp tslint",
-      "post-checkout": "npm install"
+      "pre-commit": "gulp tslint"
     }
   },
   "dependencies": {
