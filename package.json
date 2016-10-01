@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "tsc && node server.js",
+    "start": "node server.js",
+    "postinstall": "tsc",
     "typings": "typings",
     "tsWatch": "tsc -w",
     "tsBuild": "tsc",
@@ -46,6 +47,7 @@
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.39",
+    "typescript": "^2.0.3",
     "zone.js": "^0.6.25"
   },
   "devDependencies": {
@@ -55,7 +57,7 @@
     "gulp": "^3.9.1",
     "gulp-tslint": "^6.1.2",
     "tslint": "^3.15.1",
-    "typescript": "^2.0.3",
+    
     "typings": "^1.4.0"
   }
 }
