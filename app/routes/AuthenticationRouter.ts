@@ -8,8 +8,6 @@ import {ILoginResponse} from "../utils/interfaces";
 const SALT_ROUNDS = process.env.BCRYPT_SALT || 17;
 export const AuthenticationRouter = express.Router();
 
-
-
 AuthenticationRouter.post("/login", (req, res) => {
     let _error = false, _errMessage = [];
     if(!req.body.username){
