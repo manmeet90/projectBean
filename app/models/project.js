@@ -12,4 +12,4 @@ var ProjectSchema = new mongoose.Schema({
 });
 ProjectSchema.pre("save", mongooseUtils_1.mongooseUtils.addDefaultCCUU);
 exports.Project = mongoose.model("Project", ProjectSchema);
-//# sourceMappingURL=Project.js.map
+//# sourceMappingURL=project.js.map

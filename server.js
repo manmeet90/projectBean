@@ -11,7 +11,7 @@ var utils_1 = require("./app/utils/utils");
 var app = express();
 var PORT = process.env.PORT || 3000;
 var connectionString = process.env.MONGODB_URI || "mongodb://heroku_65mb5xq1:om1ogr9ot3fp8f6e4607otalar@ds047666.mlab.com:47666/heroku_65mb5xq1";
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use("/public", express.static(__dirname + "/public"));
 app.use("/node_modules", express.static(__dirname + "/node_modules"));
 app.use(bodyParser.json());

@@ -22,10 +22,10 @@ exports.utils = {
     },
     UUID: function () {
         var d = new Date().getTime();
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
             var r = (d + Math.random() * 16) % 16 | 0;
             d = Math.floor(d / 16);
-            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
         });
         return uuid;
     },
@@ -61,16 +61,16 @@ exports.utils = {
     },
     checkForValidSessionMiddleware: function (req, res, next) {
         var ROUTES_IGNORE = ["/auth/login", "/auth/fpassword", "/auth/register"];
-        var sessionIdInRequest = req.get('X-Session-Key');
+        var sessionIdInRequest = req.get("X-Session-Key");
         var _flag = false;
-        if (req.method == "OPTIONS") {
+        if (req.method === "OPTIONS") {
             next();
         }
         else if (sessionIdInRequest) {
             usersession_1.UserSession.findOne({ sessionId: sessionIdInRequest }).exec()
                 .then(function (session) {
                 if (session && session.username) {
-                    if (session.isActive == true) {
+                    if (session.isActive === true) {
                         req.session = {
                             sessionID: sessionIdInRequest,
                             userID: session.username
@@ -90,7 +90,7 @@ exports.utils = {
                             _flag = true;
                         }
                     });
-                    if (_flag == false) {
+                    if (_flag === false) {
                         res.status(401);
                         res.json({ message: "Unauthorized access" });
                     }
@@ -99,7 +99,7 @@ exports.utils = {
                     }
                 }
             }, function (err) {
-                if (err == 422) {
+                if (err === 422) {
                     res.status(401);
                     res.json({ message: "Unauthorized access" });
                 }
@@ -117,7 +117,7 @@ exports.utils = {
                     _flag = true;
                 }
             });
-            if (_flag == false) {
+            if (_flag === false) {
                 res.status(401);
                 res.json({ message: "Unauthorized access" });
             }

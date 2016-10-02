@@ -4,7 +4,7 @@ var user_1 = require("../models/user");
 var bcrypt = require("bcrypt-nodejs");
 var utils_1 = require("../utils/utils");
 var SessionController_1 = require("../controllers/SessionController");
-var SALT_ROUNDS = 17;
+var SALT_ROUNDS = process.env.BCRYPT_SALT || 17;
 exports.AuthenticationRouter = express.Router();
 exports.AuthenticationRouter.post("/login", function (req, res) {
     var _error = false, _errMessage = [];
