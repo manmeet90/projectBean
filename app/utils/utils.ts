@@ -1,13 +1,6 @@
 import {UserSession} from "../models/usersession";
+import {IErrorObject, IResponse} from "./interfaces";
 
-interface IErrorObject{
-    message ?: string;
-}
-
-interface IResponse{
-    messages : Array<IErrorObject>;
-    code : number;
-}
 
 export const utils = {
     sendBadRequestResponse : (err: IErrorObject | Array<IErrorObject>) => {

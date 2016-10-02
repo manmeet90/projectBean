@@ -3,13 +3,11 @@ import {User} from "../models/user";
 const bcrypt = require("bcrypt-nodejs");
 import {utils} from "../utils/utils";
 import {SessionController} from "../controllers/SessionController";
+import {ILoginResponse} from "../utils/interfaces";
 
-const SALT_ROUNDS = 17;
+const SALT_ROUNDS = process.env.BCRYPT_SALT || 17;
 export const AuthenticationRouter = express.Router();
 
-interface ILoginResponse {
-    sessionId : string;
-}
 
 
 AuthenticationRouter.post("/login", (req, res) => {
