@@ -1,0 +1,17 @@
+/// <reference path="../../typings/index.d.ts" />
+"use strict";
+var mongoose = require("mongoose");
+var mongooseUtils_1 = require("../utils/mongooseUtils");
+var ResourceSchema = new mongoose.Schema({
+    resourceName: String,
+    resourceType: Number,
+    resourceUrl: String,
+    description: String,
+    lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
+    updatedAt: String,
+    createdAt: String
+});
+ResourceSchema.pre("save", mongooseUtils_1.mongooseUtils.addDefaultCCUU);
+exports.Resource = mongoose.model("Resource", ResourceSchema);
+//# sourceMappingURL=resources.js.map
