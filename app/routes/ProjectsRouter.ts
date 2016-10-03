@@ -6,8 +6,8 @@ import {utils} from "../utils/utils";
 import {ResourceController} from "../controllers/ResourceController";
 import * as multer from "multer";
 import * as fs from "fs";
-import * as AWS from 'aws-sdk';
-AWS.config.loadFromPath('./config/awsConfig.json');
+import * as AWS from "aws-sdk";
+AWS.config.loadFromPath("./config/awsConfig.json");
 
 
 export const ProjectsRouter = express.Router();
@@ -103,11 +103,11 @@ ProjectsRouter.get("/:projectId/resources/:resourceId", (req, res) =>{
             .then(resource =>{
                 let response = {};
                 if(resource){
-                    let s3bucket = new AWS.S3({ params: {Bucket: 'node1test'} });
+                    let s3bucket = new AWS.S3({ params: {Bucket: "node1test"} });
                     let params = {
-                        Key: resource.resourceName, //file.name doesn't exist as a property
+                        Key: resource.resourceName, // file.name doesn"t exist as a property
                     };
-                    s3bucket.getSignedUrl('getObject', {Bucket: 'node1test', Key: params.Key}, (err, url) =>{
+                    s3bucket.getSignedUrl("getObject", {Bucket: "node1test", Key: params.Key}, (err, url) =>{
                         resource.resourceUrl = url;
                         response = Object.assign({}, utils.cleanObject(resource));
                         res.json(response);
@@ -200,7 +200,7 @@ ProjectsRouter.put("/", (req, res) => {
     }
 });
 
-ProjectsRouter.post("/:projectId/resources", multer({ dest: './uploads/'}).any(), (req, res) =>{
+ProjectsRouter.post("/:projectId/resources", multer({ dest: "./uploads/"}).any(), (req, res) =>{
     let file = req.files[0];
     fs.readFile(file.path, function (err, data) {
         if (err) {
@@ -208,9 +208,9 @@ ProjectsRouter.post("/:projectId/resources", multer({ dest: './uploads/'}).any()
             res.json(utils.sendBadRequestResponse(err));  
         }
         
-        let s3bucket = new AWS.S3({ params: {Bucket: 'node1test'} });
+        let s3bucket = new AWS.S3({ params: {Bucket: "node1test"} });
         let params = {
-            Key: file.originalname, //file.name doesn't exist as a property
+            Key: file.originalname, // file.name doesn"t exist as a property
             Body: data
         };
         s3bucket.upload(params, function (_err, data) {
@@ -219,7 +219,7 @@ ProjectsRouter.post("/:projectId/resources", multer({ dest: './uploads/'}).any()
                 if (error) {
                     console.error(error);
                 }
-                console.log('Temp File Delete');
+                console.log("Temp File Delete");
             });
 
             if (_err) {
@@ -285,9 +285,9 @@ ProjectsRouter.delete("/:projectId/resources/:resourceId", (req, res) => {
             .then(resource =>{
                 let response = {};
                 if(resource){
-                    let s3bucket = new AWS.S3({ params: {Bucket: 'node1test'} });
+                    let s3bucket = new AWS.S3({ params: {Bucket: "node1test"} });
                     let params = {
-                        Key: resource.resourceName, //file.name doesn't exist as a property
+                        Key: resource.resourceName, // file.name doesn"t exist as a property
                     };
                     s3bucket.deleteObject(params, (err) =>{
                         if(err){
@@ -331,9 +331,9 @@ ProjectsRouter.delete("/:projectId", (req, res) =>{
                 for(let resource of resources){
                     resource.remove((err) =>{
                         if(!err){
-                            let s3bucket = new AWS.S3({ params: {Bucket: 'node1test'} });
+                            let s3bucket = new AWS.S3({ params: {Bucket: "node1test"} });
                             let params = {
-                                Key: resource.resourceName, //file.name doesn't exist as a property
+                                Key: resource.resourceName, // file.name doesn"t exist as a property
                             };
                             s3bucket.deleteObject(params, (err) =>{
                                 if(err){

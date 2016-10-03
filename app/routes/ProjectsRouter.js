@@ -6,8 +6,8 @@ var utils_1 = require("../utils/utils");
 var ResourceController_1 = require("../controllers/ResourceController");
 var multer = require("multer");
 var fs = require("fs");
-var AWS = require('aws-sdk');
-AWS.config.loadFromPath('./config/awsConfig.json');
+var AWS = require("aws-sdk");
+AWS.config.loadFromPath("./config/awsConfig.json");
 exports.ProjectsRouter = express.Router();
 exports.ProjectsRouter.get("/", function (req, res) {
     project_1.Project.find({})
@@ -102,11 +102,11 @@ exports.ProjectsRouter.get("/:projectId/resources/:resourceId", function (req, r
                 .then(function (resource) {
                 var response = {};
                 if (resource) {
-                    var s3bucket = new AWS.S3({ params: { Bucket: 'node1test' } });
+                    var s3bucket = new AWS.S3({ params: { Bucket: "node1test" } });
                     var params = {
                         Key: resource.resourceName,
                     };
-                    s3bucket.getSignedUrl('getObject', { Bucket: 'node1test', Key: params.Key }, function (err, url) {
+                    s3bucket.getSignedUrl("getObject", { Bucket: "node1test", Key: params.Key }, function (err, url) {
                         resource.resourceUrl = url;
                         response = Object.assign({}, utils_1.utils.cleanObject(resource));
                         res.json(response);
@@ -198,14 +198,14 @@ exports.ProjectsRouter.put("/", function (req, res) {
         _saveProject(req, res, true);
     }
 });
-exports.ProjectsRouter.post("/:projectId/resources", multer({ dest: './uploads/' }).any(), function (req, res) {
+exports.ProjectsRouter.post("/:projectId/resources", multer({ dest: "./uploads/" }).any(), function (req, res) {
     var file = req.files[0];
     fs.readFile(file.path, function (err, data) {
         if (err) {
             res.status(500);
             res.json(utils_1.utils.sendBadRequestResponse(err));
         }
-        var s3bucket = new AWS.S3({ params: { Bucket: 'node1test' } });
+        var s3bucket = new AWS.S3({ params: { Bucket: "node1test" } });
         var params = {
             Key: file.originalname,
             Body: data
@@ -216,7 +216,7 @@ exports.ProjectsRouter.post("/:projectId/resources", multer({ dest: './uploads/'
                 if (error) {
                     console.error(error);
                 }
-                console.log('Temp File Delete');
+                console.log("Temp File Delete");
             });
             if (_err) {
                 res.status(500);
@@ -283,7 +283,7 @@ exports.ProjectsRouter.delete("/:projectId/resources/:resourceId", function (req
                 .then(function (resource) {
                 var response = {};
                 if (resource) {
-                    var s3bucket = new AWS.S3({ params: { Bucket: 'node1test' } });
+                    var s3bucket = new AWS.S3({ params: { Bucket: "node1test" } });
                     var params = {
                         Key: resource.resourceName,
                     };
@@ -331,7 +331,7 @@ exports.ProjectsRouter.delete("/:projectId", function (req, res) {
                     var resource = resources[_i];
                     resource.remove(function (err) {
                         if (!err) {
-                            var s3bucket = new AWS.S3({ params: { Bucket: 'node1test' } });
+                            var s3bucket = new AWS.S3({ params: { Bucket: "node1test" } });
                             var params = {
                                 Key: resource.resourceName,
                             };
