@@ -180,7 +180,6 @@ AuthenticationRouter.post("/profile", (req, res) =>{
             res.json({message:`username ${_newUser.employeeId} already exists.`});
         }else{
             if(isUpdateAction){
-                _user.password = _newUser.password;
                 _user.empName =  _newUser.empName;
                 _user.jobTitle = _newUser.jobTitle;
                 _user.contactNumber = _newUser.contactNumber;

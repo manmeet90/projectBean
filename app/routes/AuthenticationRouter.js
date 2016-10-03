@@ -176,7 +176,6 @@ exports.AuthenticationRouter.post("/profile", function (req, res) {
         }
         else {
             if (isUpdateAction) {
-                _user.password = _newUser.password;
                 _user.empName = _newUser.empName;
                 _user.jobTitle = _newUser.jobTitle;
                 _user.contactNumber = _newUser.contactNumber;
