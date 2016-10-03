@@ -41,6 +41,6 @@ export class LoginComponent {
             validateUserName : {
                 valid : false
             }
-        }
+        };
     }
 }
