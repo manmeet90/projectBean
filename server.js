@@ -7,6 +7,7 @@ var AuthenticationRouter_1 = require("./app/routes/AuthenticationRouter");
 var SearchRouter_1 = require("./app/routes/SearchRouter");
 var ProjectsRouter_1 = require("./app/routes/ProjectsRouter");
 var config = require("config");
+var utils_1 = require("./app/utils/utils");
 var app = express();
 var PORT = process.env.PORT || 3000;
 var connectionString = process.env.MONGODB_URI || config.get("momgoDBConnectionUrl");
@@ -43,7 +44,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Session-Key");
     next();
 });
-// app.use("/api", utils.checkForValidSessionMiddleware);
+app.use("/api", utils_1.utils.checkForValidSessionMiddleware);
 // Routes Mapping
 app.use("/api/auth", AuthenticationRouter_1.AuthenticationRouter);
 app.use("/api/search", SearchRouter_1.SearchRouter);

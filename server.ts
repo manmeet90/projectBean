@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-// app.use("/api", utils.checkForValidSessionMiddleware);
+app.use("/api", utils.checkForValidSessionMiddleware);
 // Routes Mapping
 app.use("/api/auth", AuthenticationRouter);
 app.use("/api/search", SearchRouter);
