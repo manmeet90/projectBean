@@ -34,7 +34,7 @@ ProjectsRouter.get("/", (req, res) =>{
 });
 
 ProjectsRouter.get("/:projectId", (req, res) =>{
-    Project.find({projectId: req.params.projectId})
+    Project.findOne({projectId: req.params.projectId})
     .populate({path: "projectManager", select : "_id emailId employeeId empName"})
     .populate({path: "members", select : "_id emailId employeeId empName"})
     .exec()

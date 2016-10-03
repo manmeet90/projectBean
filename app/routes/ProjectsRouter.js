@@ -32,7 +32,7 @@ exports.ProjectsRouter.get("/", function (req, res) {
     });
 });
 exports.ProjectsRouter.get("/:projectId", function (req, res) {
-    project_1.Project.find({ projectId: req.params.projectId })
+    project_1.Project.findOne({ projectId: req.params.projectId })
         .populate({ path: "projectManager", select: "_id emailId employeeId empName" })
         .populate({ path: "members", select: "_id emailId employeeId empName" })
         .exec()
