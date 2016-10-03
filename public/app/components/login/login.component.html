@@ -1,0 +1,34 @@
+<div class="col s12 m8 offset-m2">
+    <div class="card blue-grey darken-1">
+    <div class="card-content white-text">
+        <span class="card-title">{{cardTitle}}</span>
+        <div class="row">
+            <form class="col s12" [formGroup]="loginForm">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="username" type="text" class="validate" name="username" [formControl]="loginForm.controls['username']" />
+                        <label for="username">{{lbl_username_field}}</label>
+                    </div>
+                    <div class="col s12" [hidden]="loginForm.controls['username'].valid || loginForm.controls['username'].pristine">
+                        <div class="col s12 error" [hidden]="!loginForm.controls['username'].hasError('required')">Username is required</div>
+                        <div class="col s12 error" [hidden]="!loginForm.controls['username'].hasError('validateUserName')">Invalid username</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate" name="password" [formControl]="loginForm.controls['password']" />
+                        <label for="password">{{lbl_password_field}}</label>
+                    </div>
+                    <div class="col s12" [hidden]="loginForm.controls['password'].valid || loginForm.controls['password'].pristine">
+                        <div class="col s12 error" [hidden]="!loginForm.controls['password'].hasError('required')">password is required</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card-action">
+        <button class="waves-effect waves-light btn blue darken-1" [disabled]="loginForm.invalid" (click)="login(loginForm)">{{btn_login_text}}</button>
+        &nbsp;&nbsp;&nbsp;<a href="#/forgotpassword">{{lbl_forgotpassword_link}}</a>
+    </div>
+    </div>
+</div>
