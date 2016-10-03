@@ -33,13 +33,11 @@ export class SessionController {
         return new Promise((resolve, reject) => {
             UserSession.findOne({username : this.userId})
             .exec()
-            .then((err, userInfo) => {
-                if(err) {
-                    reject(err);
-                }else if(userInfo) {
+            .then((userInfo) => {
+                if(userInfo) {
                     userInfo.sessionId = this.sessionId;
-                    userInfo.save()
-                    .exec((_err, _userInfo) => {
+                    userInfo.isActive = true;
+                    userInfo.save((_err, _userInfo) => {
                         if(_err) {
                             reject(_err);
                         }else {
@@ -47,6 +45,8 @@ export class SessionController {
                         }
                     });
                 }
+            }, (err) =>{
+                reject(err);
             });
         });
     }

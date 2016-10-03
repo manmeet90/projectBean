@@ -5,7 +5,8 @@ import {mongooseUtils} from "../utils/mongooseUtils";
 
 const ResourceSchema = new mongoose.Schema({
     resourceName : String,
-    resourceType : Number,
+    resourceType : {type: Number, default : 1},
+    mimeType: String,
     resourceUrl : String,
     description : String,
     lastUpdatedBy : {type : mongoose.Schema.Types.ObjectId, ref : "User"},

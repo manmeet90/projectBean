@@ -130,18 +130,20 @@ AuthenticationRouter.delete("/logout", (req, res) =>{
     }
 });
 
-AuthenticationRouter.post("/register", (req, res) =>{
+AuthenticationRouter.post("/profile", (req, res) =>{
     let _error = false, _errMessage = [];
+    let isUpdateAction = req.query.update || false;
+
     const emailRegex = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
     if(!req.body.username){
         _error = true;
         _errMessage.push({message : "username parameter missing"});
     }
-    if(!req.body.password){
+    if(!req.body.password && !isUpdateAction){
         _error = true;
         _errMessage.push({message : "password parameter missing"});
     }
-    if(!req.body.email){
+    if(!req.body.email && !isUpdateAction){
         _error = true;
         _errMessage.push({message : "emailId parameter missing"});
     }else if(req.body.email && !emailRegex.test(req.body.email)){
@@ -154,17 +156,19 @@ AuthenticationRouter.post("/register", (req, res) =>{
         res.json(utils.sendBadRequestResponse(_errMessage));
         return;
     }
-    let salt = bcrypt.genSaltSync(SALT_ROUNDS);
-    let hash = bcrypt.hashSync(req.body.password, salt);
 
     let _newUser : User = new User({
         employeeId : req.body.username,
-        password : hash,
-        emailId : req.body.email,
+        empName : req.body.empName,
+        emailId : req.body.email
     });
+    if(!isUpdateAction){
+        let salt = bcrypt.genSaltSync(SALT_ROUNDS);
+        let hash = bcrypt.hashSync(req.body.password, salt);
+        _newUser.password = hash;
+    }
     if(req.body.jobTitle){
         _newUser.jobTitle = req.body.jobTitle;
-         
     }
     if(req.body.contactNumber){
         _newUser.contactNumber = req.body.contactNumber;
@@ -172,27 +176,45 @@ AuthenticationRouter.post("/register", (req, res) =>{
     User.findOne({employeeId: _newUser.employeeId})
     .exec()
     .then((_user) =>{
-        if(_user){
+        if(_user && !isUpdateAction){
             res.json({message:`username ${_newUser.employeeId} already exists.`});
         }else{
-            _newUser.save((err, userInfo) => {
-                if(err){
-                    res.status(500);
-                    res.json(utils.sendBadRequestResponse(err));
-                }else{
-                    // generate new session key for user
-                    let _newSessionId = utils.UUID();
-                    let sessionController = new SessionController(userInfo.employeeId, _newSessionId);
-                    sessionController.createNewSession()
-                    .then(()=>{
-                        let registerResponse : ILoginResponse = Object.assign({}, {sessionId : _newSessionId}, utils.cleanObject(userInfo,["password"]));
-                        res.json(registerResponse);
-                    }, (_err) =>{
+            if(isUpdateAction){
+                _user.password = _newUser.password;
+                _user.empName =  _newUser.empName;
+                _user.jobTitle = _newUser.jobTitle;
+                _user.contactNumber = _newUser.contactNumber;
+
+                _user.save((err, userInfo) =>{
+                    if(err){
                         res.status(500);
-                        res.json(utils.sendBadRequestResponse(_err));        
-                    });
-                }
-            });
+                        res.json(utils.sendBadRequestResponse(err));
+                    }else{
+                        let registerResponse : ILoginResponse = Object.assign({}, utils.cleanObject(userInfo,["password"]));
+                        res.json(registerResponse);
+                    }
+                });
+            }else{
+                _newUser.save((err, userInfo) => {
+                    if(err){
+                        res.status(500);
+                        res.json(utils.sendBadRequestResponse(err));
+                    }else{
+                        // generate new session key for user
+                        let _newSessionId = utils.UUID();
+                        let sessionController = new SessionController(userInfo.employeeId, _newSessionId);
+                        sessionController.createNewSession()
+                        .then(()=>{
+                            let registerResponse : ILoginResponse = Object.assign({}, {sessionId : _newSessionId}, utils.cleanObject(userInfo,["password"]));
+                            res.status(201);
+                            res.json(registerResponse);
+                        }, (_err) =>{
+                            res.status(500);
+                            res.json(utils.sendBadRequestResponse(_err));        
+                        });
+                    }
+                });
+            }
         }
     }, (__err) =>{
         res.status(500);
@@ -200,5 +222,3 @@ AuthenticationRouter.post("/register", (req, res) =>{
     });
     
 });
-
-

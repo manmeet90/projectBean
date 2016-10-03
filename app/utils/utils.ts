@@ -65,7 +65,7 @@ export const utils = {
     },
 
     checkForValidSessionMiddleware: function (req, res, next){
-        let ROUTES_IGNORE = ["/auth/login", "/auth/fpassword","/auth/register"];
+        let ROUTES_IGNORE = ["/auth/login", "/auth/fpassword","/auth/profile"];
         let sessionIdInRequest = req.get("X-Session-Key");
         
         let _flag = false;

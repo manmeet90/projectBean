@@ -1,10 +1,10 @@
 /// <reference path="../../typings/index.d.ts" />
-"use strict";
 var mongoose = require("mongoose");
 var mongooseUtils_1 = require("../utils/mongooseUtils");
 var ResourceSchema = new mongoose.Schema({
     resourceName: String,
-    resourceType: Number,
+    resourceType: { type: Number, default: 1 },
+    mimeType: String,
     resourceUrl: String,
     description: String,
     lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

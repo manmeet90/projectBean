@@ -6,12 +6,12 @@ import * as logger from "morgan";
 import {AuthenticationRouter} from "./app/routes/AuthenticationRouter";
 import {SearchRouter} from "./app/routes/SearchRouter";
 import {ProjectsRouter} from "./app/routes/ProjectsRouter";
-
+import * as config from "config";
 import {utils} from "./app/utils/utils";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const connectionString = process.env.MONGODB_URI || "mongodb://heroku_65mb5xq1:om1ogr9ot3fp8f6e4607otalar@ds047666.mlab.com:47666/heroku_65mb5xq1";
+const connectionString = process.env.MONGODB_URI || config.get("momgoDBConnectionUrl");
 
 app.use(logger("dev"));
 app.use("/public", express.static(__dirname + "/public"));
@@ -53,11 +53,14 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use("/api", utils.checkForValidSessionMiddleware);
+// app.use("/api", utils.checkForValidSessionMiddleware);
 // Routes Mapping
 app.use("/api/auth", AuthenticationRouter);
 app.use("/api/search", SearchRouter);
 app.use("/api/projects", ProjectsRouter);
+app.use("/fileuploadtest", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/fileuploadtest.html"));
+});
 app.use("/", (req, res) => {
     res.sendFile(path.join(__dirname, "./public/app/index.html"));
 });

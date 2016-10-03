@@ -1,4 +1,3 @@
-"use strict";
 var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
@@ -7,10 +6,10 @@ var logger = require("morgan");
 var AuthenticationRouter_1 = require("./app/routes/AuthenticationRouter");
 var SearchRouter_1 = require("./app/routes/SearchRouter");
 var ProjectsRouter_1 = require("./app/routes/ProjectsRouter");
-var utils_1 = require("./app/utils/utils");
+var config = require("config");
 var app = express();
 var PORT = process.env.PORT || 3000;
-var connectionString = process.env.MONGODB_URI || "mongodb://heroku_65mb5xq1:om1ogr9ot3fp8f6e4607otalar@ds047666.mlab.com:47666/heroku_65mb5xq1";
+var connectionString = process.env.MONGODB_URI || config.get("momgoDBConnectionUrl");
 app.use(logger("dev"));
 app.use("/public", express.static(__dirname + "/public"));
 app.use("/node_modules", express.static(__dirname + "/node_modules"));
@@ -44,11 +43,14 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Session-Key");
     next();
 });
-app.use("/api", utils_1.utils.checkForValidSessionMiddleware);
+// app.use("/api", utils.checkForValidSessionMiddleware);
 // Routes Mapping
 app.use("/api/auth", AuthenticationRouter_1.AuthenticationRouter);
 app.use("/api/search", SearchRouter_1.SearchRouter);
 app.use("/api/projects", ProjectsRouter_1.ProjectsRouter);
+app.use("/fileuploadtest", function (req, res) {
+    res.sendFile(path.join(__dirname, "./public/fileuploadtest.html"));
+});
 app.use("/", function (req, res) {
     res.sendFile(path.join(__dirname, "./public/app/index.html"));
 });
