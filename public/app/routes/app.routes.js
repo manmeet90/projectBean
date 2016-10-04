@@ -1,4 +1,4 @@
-var router_1 = require('@angular/router');
+var router_1 = require("@angular/router");
 var login_component_1 = require("../components/login/login.component");
 var register_component_1 = require("../components/register/register.component");
 var home_component_1 = require("../components/home/home.component");
@@ -6,7 +6,7 @@ var project_detail_component_1 = require("../components/project/project.detail.c
 var resource_component_1 = require("../components/project/resource.component");
 var appRoutes = [
     {
-        path: 'login',
+        path: "login",
         component: login_component_1.LoginComponent
     },
     {

@@ -9,7 +9,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var User_1 = require("../../models/User");
 var AuthenticationService_1 = require("../../services/AuthenticationService");
@@ -81,8 +81,8 @@ var RegisterComponent = (function () {
     RegisterComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'register',
-            templateUrl: 'register.component.html',
+            selector: "register",
+            templateUrl: "register.component.html",
             styleUrls: ["../app/app.component.css"],
             providers: [AuthenticationService_1.AuthenticationService]
         }), 

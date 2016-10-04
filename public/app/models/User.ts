@@ -11,5 +11,5 @@ export class User {
     projects : Project[] | string[];
     updatedAt : string;
     createdAt :  string;
-    isActive : boolean
+    isActive : boolean;
 }

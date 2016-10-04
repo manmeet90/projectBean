@@ -9,7 +9,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var ProjectService_1 = require("../../services/ProjectService");
 var HomeComponent = (function () {
     function HomeComponent(projectService) {
@@ -27,8 +27,8 @@ var HomeComponent = (function () {
     HomeComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'home',
-            templateUrl: './home.component.html',
+            selector: "home",
+            templateUrl: "./home.component.html",
             providers: [ProjectService_1.ProjectService],
             styleUrls: ["./home.component.css"]
         }), 

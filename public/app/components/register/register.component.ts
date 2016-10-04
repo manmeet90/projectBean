@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {User} from "../../models/User";
 import {AuthenticationService} from "../../services/AuthenticationService";
@@ -6,8 +6,8 @@ import {utils} from "../../utils";
 
 @Component({
     moduleId: module.id,
-    selector: 'register',
-    templateUrl: 'register.component.html',
+    selector: "register",
+    templateUrl: "register.component.html",
     styleUrls: ["../app/app.component.css"],
     providers: [AuthenticationService]
 })

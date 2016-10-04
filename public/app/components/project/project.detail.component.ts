@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Project} from "../../models/Project";
 import {Resource} from "../../models/Resource";
@@ -7,9 +7,9 @@ import {ProjectService} from "../../services/ProjectService";
 
 @Component({
     moduleId: module.id,
-    selector: 'project-detail',
-    templateUrl: './project.detail.component.html',
-    styleUrls: ['./project.detail.component.css'],
+    selector: "project-detail",
+    templateUrl: "./project.detail.component.html",
+    styleUrls: ["./project.detail.component.css"],
     providers: [ProjectService]
 })
 export class ProjectDetailComponent implements OnInit {
@@ -22,7 +22,7 @@ export class ProjectDetailComponent implements OnInit {
     constructor(private route: ActivatedRoute, private projectService: ProjectService) { }
 
     ngOnInit() {
-        $('.collapsible').collapsible({
+        $(".collapsible").collapsible({
             accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
         });
         this.route.params.subscribe(params => {

@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Resource} from "../../models/Resource";
 import {ProjectService} from "../../services/ProjectService"; 
-import {Location} from '@angular/common';
+import {Location} from "@angular/common";
 
 
 @Component({
     moduleId: module.id,
-    selector: 'add-resource-form',
-    templateUrl: 'resource.component.html'
+    selector: "add-resource-form",
+    templateUrl: "resource.component.html"
 })
 export class AddResourceComponent implements OnInit {
     projectId: string;
@@ -42,7 +42,7 @@ export class AddResourceComponent implements OnInit {
     }
 
     onFileChange(event: Event){
-        var files = event.srcElement.files;
+        let files = event.srcElement.files;
         if(files && files[0]){
             this.resource.resourceFile = files[0];
             this.enableUploadBtn = true;

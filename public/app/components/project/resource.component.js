@@ -9,10 +9,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var ProjectService_1 = require("../../services/ProjectService");
-var common_1 = require('@angular/common');
+var common_1 = require("@angular/common");
 var AddResourceComponent = (function () {
     function AddResourceComponent(location, route, projectService) {
         this.location = location;
@@ -52,8 +52,8 @@ var AddResourceComponent = (function () {
     AddResourceComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'add-resource-form',
-            templateUrl: 'resource.component.html'
+            selector: "add-resource-form",
+            templateUrl: "resource.component.html"
         }), 
         __metadata('design:paramtypes', [common_1.Location, router_1.ActivatedRoute, ProjectService_1.ProjectService])
     ], AddResourceComponent);

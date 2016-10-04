@@ -9,7 +9,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var Project_1 = require("../../models/Project");
 var ProjectService_1 = require("../../services/ProjectService");
@@ -24,7 +24,7 @@ var ProjectDetailComponent = (function () {
     }
     ProjectDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
-        $('.collapsible').collapsible({
+        $(".collapsible").collapsible({
             accordion: true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
         });
         this.route.params.subscribe(function (params) {
@@ -82,9 +82,9 @@ var ProjectDetailComponent = (function () {
     ProjectDetailComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'project-detail',
-            templateUrl: './project.detail.component.html',
-            styleUrls: ['./project.detail.component.css'],
+            selector: "project-detail",
+            templateUrl: "./project.detail.component.html",
+            styleUrls: ["./project.detail.component.css"],
             providers: [ProjectService_1.ProjectService]
         }), 
         __metadata('design:paramtypes', [router_1.ActivatedRoute, ProjectService_1.ProjectService])

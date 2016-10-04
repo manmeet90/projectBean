@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {ProjectService} from "../../services/ProjectService"; 
 import {Project} from "../../models/Project";
 
 @Component({
     moduleId: module.id,
-    selector: 'home',
-    templateUrl: './home.component.html',
+    selector: "home",
+    templateUrl: "./home.component.html",
     providers: [ProjectService],
     styleUrls: ["./home.component.css"]
 })

@@ -1,8 +1,8 @@
-import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Injectable }    from "@angular/core";
+import { Headers, Http } from "@angular/http";
 import {constants} from "../constants";
 import {User} from "../models/User";
-import 'rxjs/add/operator/toPromise';
+import "rxjs/add/operator/toPromise";
 
 @Injectable()
 export class AuthenticationService {
