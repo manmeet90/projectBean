@@ -1,0 +1,66 @@
+<div class="col s12 m8 offset-m2">
+    <div class="card blue-grey darken-1">
+    <div class="card-content white-text">
+        <span class="card-title">{{cardTitle}}</span>
+        <div class="row">
+            <form class="col s12" [formGroup]="registerForm" novalidate>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="username" type="text" class="validate" name="username" formControlName="username" />
+                        <label for="username">{{lbl_employeeId_field}}</label>
+                    </div>
+                    <div class="col s12" [hidden]="registerForm.controls.username.valid || registerForm.controls.username.pristine">
+                        <div class="col s12 error" [hidden]="!registerForm.controls.username.errors?.required">Employee ID is required</div>
+                        <div class="col s12 error" [hidden]="!registerForm.controls.username.errors?.pattern">Invalid employee ID</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate" name="password" formControlName="password" />
+                        <label for="password">{{lbl_password_field}}</label>
+                    </div>
+                    <div class="col s12" [hidden]="registerForm.controls.password.valid || registerForm.controls.password.pristine">
+                        <div class="col s12 error" [hidden]="!registerForm.controls.password.errors?.required">password is required</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="emailid" type="email" class="validate" name="emailid" formControlName="email" />
+                        <label for="emailid">{{lbl_email_field}}</label>
+                    </div>
+                    <div class="col s12" [hidden]="registerForm.controls.email.valid || registerForm.controls.email.pristine">
+                        <div class="col s12 error" [hidden]="!registerForm.controls.email.errors?.required">email ID is required</div>
+                        <div class="col s12 error" [hidden]="!registerForm.controls.email.errors?.validateEmail">Invalid email ID</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="empname" type="text" class="validate" name="empname" formControlName="empName" />
+                        <label for="empname">{{lbl_empname_field}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="jobTitle" type="text" class="validate" name="jobTitle" formControlName="jobTitle" />
+                        <label for="jobTitle">{{lbl_jobTitle_field}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="contactNumber" type="number" class="validate" name="contactNumber" formControlName="contactNumber" />
+                        <label for="contactNumber">{{lbl_contactNumber_field}}</label>
+                    </div>
+                    <div class="col s12" [hidden]="registerForm.controls.contactNumber.valid || registerForm.controls.contactNumber.pristine">
+                        <div class="col s12 error" [hidden]="!registerForm.controls.contactNumber.errors?.pattern">Invalid contact Number</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card-action">
+        <button class="waves-effect waves-light btn blue darken-1" [disabled]="registerForm.invalid" (click)="register()">{{btn_register_text}}</button>
+        &nbsp;&nbsp;<button class="waves-effect waves-light btn red darken-1" (click)="resetForm()">Clear</button>
+        &nbsp;&nbsp;&nbsp;<a routerLink="/login">{{lbl_goToLoginPage_link}}</a>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+.collapsible-body p{
+    padding:10px;
+}
+.memberslist{
+    padding: 0 20px;
+}
+
+.user_details{
+    padding: 10px;
+}
+
+.user_details > span{
+    padding:5px 0;
+    display: inline-block;
+}

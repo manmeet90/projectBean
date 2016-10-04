@@ -14,6 +14,9 @@ var AppComponent = (function () {
     function AppComponent() {
         this.name = "App Component";
     }
+    AppComponent.prototype.ngOnInit = function () {
+        $(".button-collapse").sideNav();
+    };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

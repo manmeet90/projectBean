@@ -1,0 +1,24 @@
+<h4>Add New Resource</h4>
+<form class="col s12" name="addResourceForm" #addResourceForm="ngForm" novalidate>
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="description" type="text" class="validate" name="description" [(ngModel)]="resource.description" />
+            <label for="description">{{lbl_description_field}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Select File</span>
+                <input type="file" name="resourceFile" (change)="onFileChange($event)" required />
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+         
+        <button class="waves-effect waves-light btn blue darken-1" [disabled]="!enableUploadBtn" (click)="upload()">upload</button>
+    </div>
+</form>

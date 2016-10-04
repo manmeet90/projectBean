@@ -33,6 +33,29 @@ ProjectsRouter.get("/", (req, res) =>{
     });
 });
 
+ProjectsRouter.get("/recent", (req, res) =>{
+    Project.find({})
+    .sort({updatedAt:1})
+    .limit(10)
+    .populate({path: "projectManager", select : "_id emailId employeeId empName"})
+    .populate({path: "members", select : "_id emailId employeeId empName"})
+    .exec()
+    .then(projects =>{
+        let response = [];
+        if(projects && projects.length>0){
+            for(let project of projects){
+                response.push(Object.assign({}, utils.cleanObject(project)));
+            }
+            res.json(response);
+        }else{
+            res.json(response);
+        }
+    }, err =>{
+        res.status(500);
+        res.json(utils.sendBadRequestResponse(err));
+    });
+});
+
 ProjectsRouter.get("/:projectId", (req, res) =>{
     Project.findOne({projectId: req.params.projectId})
     .populate({path: "projectManager", select : "_id emailId employeeId empName"})
@@ -150,6 +173,9 @@ ProjectsRouter.post("/", (req, res) =>{
         res.json(utils.sendBadRequestResponse(_errMessage));
         return;
     }
+    if(req.body.projectManager && req.body.members && !req.body.members.includes(req.body.projectManager)){
+        req.body.members.push(req.body.projectManager);
+    }
     if(req.body.members && req.body.members.length>0){
         User.find({
             _id : {$in: req.body.members}
@@ -168,14 +194,11 @@ ProjectsRouter.post("/", (req, res) =>{
 
 ProjectsRouter.put("/", (req, res) => {
     let _error = false, _errMessage = [];
-    if(!req.body.projectName){
+    if(!req.body.projectId){
         _error = true;
-        _errMessage.push({message : "projectName parameter missing"});
+        _errMessage.push({message : "projectId parameter missing"});
     }
-    if(!req.body.projectManager){
-        _error = true;
-        _errMessage.push({message : "projectManager parameter missing"});
-    }
+    
     if(req.body.members && !Array.isArray(req.body.members)){
         _error = true;
         _errMessage.push({message : "members parameter should be an array"});
@@ -185,6 +208,15 @@ ProjectsRouter.put("/", (req, res) => {
         res.json(utils.sendBadRequestResponse(_errMessage));
         return;
     }
+    if(req.body.projectManager){
+        if(req.body.members && req.body.members.indexOf(req.body.projectManager)===-1){
+            req.body.members.push(req.body.projectManager);
+        }else if(!req.body.members){
+            req.body.members = [];
+            req.body.members.push(req.body.projectManager);
+        }
+    }
+
     if(req.body.members && req.body.members.length>0){
         User.find({
             _id : {$in: req.body.members}
@@ -356,24 +388,69 @@ ProjectsRouter.delete("/:projectId", (req, res) =>{
 });
 
 function _saveProject(req, res, isUpdateOperation){
-    let projectId = utils.UUID();
-    let newProject = new Project({
-        projectId : projectId,
-        projectName : req.body.projectName,
-        projectManager : req.body.projectManager,
-        members : req.body.members && req.body.members.length>0 ? req.body.members : []
-    });
-
-    newProject.save((err, project) => {
-        if(err){
+    if(isUpdateOperation){
+        Project.findOne({projectId: req.body.projectId})
+        .exec()
+        .then(project => {
+            if(project){
+                if(req.body.projectName){
+                    project["projectName"] = req.body.projectName;
+                }
+                if(req.body.projectManager){
+                    project["projectManager"] = req.body.projectManager;
+                }
+                if(req.body.members){
+                    req.body.members.forEach(userId => {
+                        if(project["members"] && project["members"].indexOf(userId)===-1){
+                            project["members"].push(userId);
+                        }else if(!project["members"]){
+                            project["members"] = [];
+                            project["members"].push(userId);
+                        }
+                    });
+                } 
+                
+                project.save((err, projectInfo) => {
+                    if(err){
+                        res.status(500);
+                        res.json(utils.sendBadRequestResponse(err));
+                    }else{
+                        let response = null;
+                        response = Object.assign({}, utils.cleanObject(projectInfo));
+                        let statusCode = 200;
+                        res.status(statusCode);
+                        res.json(response);
+                    }
+                });
+            }else{
+                res.status(500);
+                res.json({message: `Project with ${req.body.projectId} not found.`});
+            }
+        }, err => {
             res.status(500);
             res.json(utils.sendBadRequestResponse(err));
-        }else{
-            let response = null;
-            response = Object.assign({},{message : isUpdateOperation ? "project updated successfully" : "project created successfully"}, utils.cleanObject(project));
-            let statusCode = isUpdateOperation ? 200 : 201;
-            res.status(statusCode);
-            res.json(response);
-        }
-    });
+        });
+    }else{
+        let projectId = utils.UUID();
+        let newProject = new Project({
+            projectId : projectId,
+            projectName : req.body.projectName,
+            projectManager : req.body.projectManager,
+            members : req.body.members && req.body.members.length>0 ? req.body.members : []
+        });
+
+        newProject.save((err, project) => {
+            if(err){
+                res.status(500);
+                res.json(utils.sendBadRequestResponse(err));
+            }else{
+                let response = null;
+                response = Object.assign({}, utils.cleanObject(project));
+                let statusCode = 201;
+                res.status(statusCode);
+                res.json(response);
+            }
+        });
+    }
+    
 }

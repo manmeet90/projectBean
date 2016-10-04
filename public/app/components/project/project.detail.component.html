@@ -1,0 +1,44 @@
+<div class="col s12">
+    <p class="col s12">Project Name : <b>{{projectDetails.info.projectName}}</b></p>
+    <p class="col s12">Project Manager : <b>{{projectDetails.info.projectManager?.empName}}</b></p>
+    <div class="col s12">
+        <a routerLink="addmember">Add New Member</a>&nbsp;&nbsp;
+        <a routerLink="addresource">Add New Project Resource</a>
+    </div>
+    
+    <div class="col s12">
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header">Members</div>
+                <div class="collapsible-body memberslist">
+                    <div class="row" *ngIf="projectDetails.info?.members && projectDetails.info?.members.length > 0">
+                        <!--<div class="row">-->
+                            <!--<div class="col s12 m6" *ngFor="let user of projectDetails.info?.members">-->
+                                <div class="col s12 card-panel blue-grey lighten-1 white-text waves-effect waves-light" *ngFor="let user of projectDetails.info?.members">
+                                    <div class="user_details">
+                                        <span>Name : {{user.empName}}</span><br>
+                                        <span>EmployeeId : {{user.employeeId}}</span><br>
+                                        <span>Email ID : {{user.emailId}}</span>
+                                    </div>
+                                </div>
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">Project Resources</div>
+                <div class="collapsible-body">
+                    <div *ngIf="projectDetails?.resources.length > 0">
+                        <p (click)="downloadResource(resource)" style="cursor:pointer" class="blue-text" *ngFor="let resource of projectDetails?.resources">
+                            {{resource.resourceName}}
+                        </p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <router-outlet></router-outlet>
+</div>
+<!--project detail component-->
