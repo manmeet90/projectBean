@@ -2,6 +2,7 @@
 
 import * as mongoose from "mongoose";
 import {mongooseUtils} from "../utils/mongooseUtils";
+import {IResourceModel} from "../utils/interfaces";
 
 const ResourceSchema = new mongoose.Schema({
     resourceName : String,
@@ -17,4 +18,4 @@ const ResourceSchema = new mongoose.Schema({
 
 ResourceSchema.pre("save", mongooseUtils.addDefaultCCUU);
 
-export const Resource = mongoose.model("Resource", ResourceSchema);
+export const Resource = mongoose.model<IResourceModel>("Resource", ResourceSchema);

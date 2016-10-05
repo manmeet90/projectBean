@@ -1,3 +1,4 @@
+"use strict";
 exports.constants = {
     baseURL: "https://projectbean-dev.herokuapp.com/api/"
 };

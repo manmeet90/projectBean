@@ -1,3 +1,4 @@
+"use strict";
 var express = require("express");
 var project_1 = require("../models/project");
 var utils_1 = require("../utils/utils");
@@ -13,8 +14,8 @@ exports.SearchRouter.get("/", function (req, res) {
             .then(function (projects) {
             var response = [];
             if (projects && projects.length > 0) {
-                for (var _i = 0; _i < projects.length; _i++) {
-                    var project = projects[_i];
+                for (var _i = 0, projects_1 = projects; _i < projects_1.length; _i++) {
+                    var project = projects_1[_i];
                     response.push(Object.assign({}, utils_1.utils.cleanObject(project)));
                 }
                 res.json(response);

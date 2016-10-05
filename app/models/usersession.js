@@ -1,4 +1,5 @@
 /// <reference path="../../typings/index.d.ts" />
+"use strict";
 var mongoose = require("mongoose");
 var mongooseUtils_1 = require("../utils/mongooseUtils");
 var UserSessionSchema = new mongoose.Schema({

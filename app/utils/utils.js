@@ -1,3 +1,4 @@
+"use strict";
 var usersession_1 = require("../models/usersession");
 exports.utils = {
     sendBadRequestResponse: function (err) {
@@ -9,8 +10,8 @@ exports.utils = {
             response.messages.push({ message: err.message || "Something went Wrong.Try Later" });
         }
         else if (err && Array.isArray(err)) {
-            for (var _i = 0; _i < err.length; _i++) {
-                var _error = err[_i];
+            for (var _i = 0, err_1 = err; _i < err_1.length; _i++) {
+                var _error = err_1[_i];
                 response.messages.push({ message: _error.message });
             }
         }
@@ -47,8 +48,8 @@ exports.utils = {
                 delete obj._id;
             }
             if (paramsArray && paramsArray.length > 0) {
-                for (var _i = 0; _i < paramsArray.length; _i++) {
-                    var _key = paramsArray[_i];
+                for (var _i = 0, paramsArray_1 = paramsArray; _i < paramsArray_1.length; _i++) {
+                    var _key = paramsArray_1[_i];
                     if (obj[_key]) {
                         delete obj[_key];
                     }

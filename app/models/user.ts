@@ -2,6 +2,7 @@
 
 import * as mongoose from "mongoose";
 import {mongooseUtils} from "../utils/mongooseUtils";
+import {IUser} from "../utils/interfaces";
 
 const UserSchema = new mongoose.Schema({
     employeeId : {type: String, unique: true},
@@ -19,4 +20,4 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre("save", mongooseUtils.addDefaultCCUU);
 
-export const User = mongoose.model("User", UserSchema);
+export const User = mongoose.model<IUser>("User", UserSchema);

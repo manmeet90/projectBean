@@ -1,3 +1,4 @@
+"use strict";
 exports.mongooseUtils = {
     addDefaultCCUU: function (next) {
         var currentDate = new Date().getTime();

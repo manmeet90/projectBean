@@ -11,6 +11,8 @@
         "noImplicitAny": false
     },
     "exclude": [
-        "node_modules", "typings"
+        "node_modules",
+         "./typings/**/*.ts",
+         "./typings/*.ts"
     ]
 }

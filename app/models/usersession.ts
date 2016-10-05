@@ -2,6 +2,7 @@
 
 import * as mongoose from "mongoose";
 import {mongooseUtils} from "../utils/mongooseUtils";
+import {ISession} from "../utils/interfaces";
 
 const UserSessionSchema = new mongoose.Schema({
     username : {type: String},
@@ -13,4 +14,4 @@ const UserSessionSchema = new mongoose.Schema({
 
 UserSessionSchema.pre("save", mongooseUtils.addDefaultCCUU);
 
-export const UserSession = mongoose.model("UserSession", UserSessionSchema);
+export const UserSession = mongoose.model<ISession>("UserSession", UserSessionSchema);

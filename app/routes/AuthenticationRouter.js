@@ -1,3 +1,4 @@
+"use strict";
 var express = require("express");
 var user_1 = require("../models/user");
 var bcrypt = require("bcrypt-nodejs");
@@ -25,25 +26,25 @@ exports.AuthenticationRouter.post("/login", function (req, res) {
     }).exec()
         .then(function (userInfo) {
         if (userInfo) {
-            if (bcrypt.compareSync(req.body.password, userInfo.password)) {
+            if (bcrypt.compareSync(req.body.password, userInfo["password"])) {
                 // create new session or update existing user session
-                var _newSessionId = utils_1.utils.UUID();
-                var sessionController = new SessionController_1.SessionController(req.body.username, _newSessionId);
-                sessionController.findSessionByUserName()
+                var _newSessionId_1 = utils_1.utils.UUID();
+                var sessionController_1 = new SessionController_1.SessionController(req.body.username, _newSessionId_1);
+                sessionController_1.findSessionByUserName()
                     .then(function (user) {
                     if (user) {
-                        sessionController.updateUserSession()
+                        sessionController_1.updateUserSession()
                             .then(function () {
-                            var loginResponse = Object.assign({}, { sessionId: _newSessionId }, utils_1.utils.cleanObject(userInfo, ["password"]));
+                            var loginResponse = Object.assign({}, { sessionId: _newSessionId_1 }, utils_1.utils.cleanObject(userInfo, ["password"]));
                             res.json(loginResponse);
                         }, function (_err) {
                             res.json(utils_1.utils.sendBadRequestResponse(_err));
                         });
                     }
                     else {
-                        sessionController.createNewSession()
+                        sessionController_1.createNewSession()
                             .then(function () {
-                            var loginResponse = Object.assign({}, { sessionId: _newSessionId }, utils_1.utils.cleanObject(userInfo, ["password"]));
+                            var loginResponse = Object.assign({}, { sessionId: _newSessionId_1 }, utils_1.utils.cleanObject(userInfo, ["password"]));
                             res.json(loginResponse);
                         }, function (_err) {
                             res.json(utils_1.utils.sendBadRequestResponse(_err));
@@ -101,12 +102,12 @@ exports.AuthenticationRouter.delete("/logout", function (req, res) {
                 res.status(500);
                 res.json({ message: "No active session found" });
             }
-            else if (sessionDetails && sessionDetails.username !== req.session.userID) {
+            else if (sessionDetails && sessionDetails["username"] !== req.session.userID) {
                 res.status(401);
                 res.json({ message: "Unauthorized access" });
             }
             else {
-                sessionDetails.isActive = false;
+                sessionDetails["isActive"] = false;
                 sessionDetails.save(function (_err) {
                     if (_err) {
                         res.status(500);
@@ -160,23 +161,23 @@ exports.AuthenticationRouter.post("/profile", function (req, res) {
     if (!isUpdateAction) {
         var salt = bcrypt.genSaltSync(SALT_ROUNDS);
         var hash = bcrypt.hashSync(req.body.password, salt);
-        _newUser.password = hash;
+        _newUser["password"] = hash;
     }
     if (req.body.jobTitle) {
-        _newUser.jobTitle = req.body.jobTitle;
+        _newUser["jobTitle"] = req.body.jobTitle;
     }
     if (req.body.contactNumber) {
-        _newUser.contactNumber = req.body.contactNumber;
+        _newUser["contactNumber"] = req.body.contactNumber;
     }
-    user_1.User.findOne({ employeeId: _newUser.employeeId })
+    user_1.User.findOne({ employeeId: _newUser["employeeId"] })
         .exec()
         .then(function (_user) {
         if (_user && !isUpdateAction) {
-            res.json({ message: "username " + _newUser.employeeId + " already exists." });
+            res.json({ message: "username " + _newUser["employeeId"] + " already exists." });
         }
         else {
             if (isUpdateAction) {
-                _user.empName = _newUser.empName;
+                _user["empName"] = _newUser["empName"];
                 _user.jobTitle = _newUser.jobTitle;
                 _user.contactNumber = _newUser.contactNumber;
                 _user.save(function (err, userInfo) {
@@ -198,11 +199,11 @@ exports.AuthenticationRouter.post("/profile", function (req, res) {
                     }
                     else {
                         // generate new session key for user
-                        var _newSessionId = utils_1.utils.UUID();
-                        var sessionController = new SessionController_1.SessionController(userInfo.employeeId, _newSessionId);
+                        var _newSessionId_2 = utils_1.utils.UUID();
+                        var sessionController = new SessionController_1.SessionController(userInfo.employeeId, _newSessionId_2);
                         sessionController.createNewSession()
                             .then(function () {
-                            var registerResponse = Object.assign({}, { sessionId: _newSessionId }, utils_1.utils.cleanObject(userInfo, ["password"]));
+                            var registerResponse = Object.assign({}, { sessionId: _newSessionId_2 }, utils_1.utils.cleanObject(userInfo, ["password"]));
                             res.status(201);
                             res.json(registerResponse);
                         }, function (_err) {

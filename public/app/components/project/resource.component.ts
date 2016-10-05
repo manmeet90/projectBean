@@ -42,7 +42,7 @@ export class AddResourceComponent implements OnInit {
     }
 
     onFileChange(event: Event){
-        let files = event.srcElement.files;
+        let files = event.srcElement["files"];
         if(files && files[0]){
             this.resource.resourceFile = files[0];
             this.enableUploadBtn = true;

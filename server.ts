@@ -2,11 +2,11 @@ import * as express from "express";
 import * as path from "path";
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
-import * as logger from "morgan";
+const logger = require("morgan");
 import {AuthenticationRouter} from "./app/routes/AuthenticationRouter";
 import {SearchRouter} from "./app/routes/SearchRouter";
 import {ProjectsRouter} from "./app/routes/ProjectsRouter";
-import * as config from "config";
+const config = require("config");
 import {utils} from "./app/utils/utils";
 
 const app = express();

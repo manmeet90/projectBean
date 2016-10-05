@@ -1,3 +1,4 @@
+"use strict";
 var resources_1 = require("../models/resources");
 var ResourceController = (function () {
     function ResourceController(resourceName, mimeType, projectId, lastUpdatedBy, resourceUrl, description) {
@@ -26,6 +27,6 @@ var ResourceController = (function () {
         return resources_1.Resource.findByIdAndRemove(fileId).exec();
     };
     return ResourceController;
-})();
+}());
 exports.ResourceController = ResourceController;
 //# sourceMappingURL=ResourceController.js.map

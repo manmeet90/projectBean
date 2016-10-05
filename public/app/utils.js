@@ -1,3 +1,4 @@
+"use strict";
 exports.utils = {
     showLoader: function () {
         document.getElementById("mainLoader").classList.remove("hide");

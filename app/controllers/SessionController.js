@@ -1,4 +1,5 @@
 /// <reference path="../../typings/index.d.ts" />
+"use strict";
 var usersession_1 = require("../models/usersession");
 var SessionController = (function () {
     function SessionController(userId, sessionId) {
@@ -29,8 +30,8 @@ var SessionController = (function () {
                 .exec()
                 .then(function (userInfo) {
                 if (userInfo) {
-                    userInfo.sessionId = _this.sessionId;
-                    userInfo.isActive = true;
+                    userInfo["sessionId"] = _this.sessionId;
+                    userInfo["isActive"] = true;
                     userInfo.save(function (_err, _userInfo) {
                         if (_err) {
                             reject(_err);
@@ -46,6 +47,6 @@ var SessionController = (function () {
         });
     };
     return SessionController;
-})();
+}());
 exports.SessionController = SessionController;
 //# sourceMappingURL=SessionController.js.map

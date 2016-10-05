@@ -4,9 +4,11 @@ import {Resource} from "../models/resources";
 import {User} from "../models/user";
 import {utils} from "../utils/utils";
 import {ResourceController} from "../controllers/ResourceController";
-import * as multer from "multer";
+// import * as multer from "multer";
+let multer = require("multer");
 import * as fs from "fs";
-import * as AWS from "aws-sdk";
+import {IResourceModel} from "../utils/interfaces";
+let AWS = require("aws-sdk");
 AWS.config.loadFromPath("./config/awsConfig.json");
 
 

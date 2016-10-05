@@ -1,9 +1,11 @@
+"use strict";
 var express = require("express");
 var project_1 = require("../models/project");
 var resources_1 = require("../models/resources");
 var user_1 = require("../models/user");
 var utils_1 = require("../utils/utils");
 var ResourceController_1 = require("../controllers/ResourceController");
+// import * as multer from "multer";
 var multer = require("multer");
 var fs = require("fs");
 var AWS = require("aws-sdk");
@@ -17,8 +19,8 @@ exports.ProjectsRouter.get("/", function (req, res) {
         .then(function (projects) {
         var response = [];
         if (projects && projects.length > 0) {
-            for (var _i = 0; _i < projects.length; _i++) {
-                var project = projects[_i];
+            for (var _i = 0, projects_1 = projects; _i < projects_1.length; _i++) {
+                var project = projects_1[_i];
                 response.push(Object.assign({}, utils_1.utils.cleanObject(project)));
             }
             res.json(response);
@@ -41,8 +43,8 @@ exports.ProjectsRouter.get("/recent", function (req, res) {
         .then(function (projects) {
         var response = [];
         if (projects && projects.length > 0) {
-            for (var _i = 0; _i < projects.length; _i++) {
-                var project = projects[_i];
+            for (var _i = 0, projects_2 = projects; _i < projects_2.length; _i++) {
+                var project = projects_2[_i];
                 response.push(Object.assign({}, utils_1.utils.cleanObject(project)));
             }
             res.json(response);
@@ -88,8 +90,8 @@ exports.ProjectsRouter.get("/:projectId/resources", function (req, res) {
                 .then(function (resources) {
                 var response = [];
                 if (resources && resources.length > 0) {
-                    for (var _i = 0; _i < resources.length; _i++) {
-                        var resource = resources[_i];
+                    for (var _i = 0, resources_2 = resources; _i < resources_2.length; _i++) {
+                        var resource = resources_2[_i];
                         response.push(Object.assign({}, utils_1.utils.cleanObject(resource)));
                     }
                     res.json(response);
@@ -359,8 +361,7 @@ exports.ProjectsRouter.delete("/:projectId", function (req, res) {
         resources_1.Resource.find({ projectId: projectId })
             .exec(function (resources) {
             if (resources && resources.length > 0) {
-                for (var _i = 0; _i < resources.length; _i++) {
-                    var resource = resources[_i];
+                var _loop_1 = function(resource) {
                     resource.remove(function (err) {
                         if (!err) {
                             var s3bucket = new AWS.S3({ params: { Bucket: "node1test" } });
@@ -374,6 +375,10 @@ exports.ProjectsRouter.delete("/:projectId", function (req, res) {
                             });
                         }
                     });
+                };
+                for (var _i = 0, resources_3 = resources; _i < resources_3.length; _i++) {
+                    var resource = resources_3[_i];
+                    _loop_1(resource);
                 }
             }
         }, function (err) {

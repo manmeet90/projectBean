@@ -1,7 +1,7 @@
 import {Resource} from "../models/resources";
 
 export class ResourceController{
-    constructor(private resourceName: string, private mimeType: string, private projectId: string,
+    constructor(private resourceName: string, private mimeType: string, private projectId: string | number,
      private lastUpdatedBy?: string, private resourceUrl?: string, private description?: string){
 
     }

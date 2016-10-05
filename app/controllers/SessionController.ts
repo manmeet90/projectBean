@@ -1,6 +1,7 @@
 /// <reference path="../../typings/index.d.ts" />
 
 import {UserSession} from "../models/usersession";
+import {ISession} from "../utils/interfaces";
 
 export class SessionController {
 
@@ -35,8 +36,8 @@ export class SessionController {
             .exec()
             .then((userInfo) => {
                 if(userInfo) {
-                    userInfo.sessionId = this.sessionId;
-                    userInfo.isActive = true;
+                    userInfo["sessionId"] = this.sessionId;
+                    userInfo["isActive"] = true;
                     userInfo.save((_err, _userInfo) => {
                         if(_err) {
                             reject(_err);

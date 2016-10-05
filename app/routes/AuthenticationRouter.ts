@@ -3,7 +3,7 @@ import {User} from "../models/user";
 const bcrypt = require("bcrypt-nodejs");
 import {utils} from "../utils/utils";
 import {SessionController} from "../controllers/SessionController";
-import {ILoginResponse} from "../utils/interfaces";
+import {ILoginResponse, IUser} from "../utils/interfaces";
 
 const SALT_ROUNDS = process.env.BCRYPT_SALT || 3;
 export const AuthenticationRouter = express.Router();
@@ -29,7 +29,7 @@ AuthenticationRouter.post("/login", (req, res) => {
     }).exec()
     .then((userInfo) => {
         if(userInfo){
-            if(bcrypt.compareSync(req.body.password, userInfo.password)){
+            if(bcrypt.compareSync(req.body.password, userInfo["password"])){
                  // create new session or update existing user session
                 let _newSessionId = utils.UUID();
                 let sessionController = new SessionController(req.body.username, _newSessionId);
@@ -106,11 +106,11 @@ AuthenticationRouter.delete("/logout", (req, res) =>{
             if(!sessionDetails){
                 res.status(500);
                 res.json({message : "No active session found"});
-            }else if(sessionDetails && sessionDetails.username !== req.session.userID){
+            }else if(sessionDetails && sessionDetails["username"] !== req.session.userID){
                 res.status(401);
                 res.json({message: "Unauthorized access"});
             }else{
-                sessionDetails.isActive = false;
+                sessionDetails["isActive"] = false;
                 sessionDetails.save((_err) =>{
                     if(_err){
                         res.status(500);
@@ -157,7 +157,7 @@ AuthenticationRouter.post("/profile", (req, res) =>{
         return;
     }
 
-    let _newUser : User = new User({
+    let _newUser : IUser = new User({
         employeeId : req.body.username,
         empName : req.body.empName,
         emailId : req.body.email
@@ -165,22 +165,22 @@ AuthenticationRouter.post("/profile", (req, res) =>{
     if(!isUpdateAction){
         let salt = bcrypt.genSaltSync(SALT_ROUNDS);
         let hash = bcrypt.hashSync(req.body.password, salt);
-        _newUser.password = hash;
+        _newUser["password"] = hash;
     }
     if(req.body.jobTitle){
-        _newUser.jobTitle = req.body.jobTitle;
+        _newUser["jobTitle"] = req.body.jobTitle;
     }
     if(req.body.contactNumber){
-        _newUser.contactNumber = req.body.contactNumber;
+        _newUser["contactNumber"] = req.body.contactNumber;
     }
-    User.findOne({employeeId: _newUser.employeeId})
+    User.findOne({employeeId: _newUser["employeeId"]})
     .exec()
     .then((_user) =>{
         if(_user && !isUpdateAction){
-            res.json({message:`username ${_newUser.employeeId} already exists.`});
+            res.json({message:`username ${_newUser["employeeId"]} already exists.`});
         }else{
             if(isUpdateAction){
-                _user.empName =  _newUser.empName;
+                _user["empName"] =  _newUser["empName"];
                 _user.jobTitle = _newUser.jobTitle;
                 _user.contactNumber = _newUser.contactNumber;
 
@@ -194,7 +194,7 @@ AuthenticationRouter.post("/profile", (req, res) =>{
                     }
                 });
             }else{
-                _newUser.save((err, userInfo) => {
+                _newUser.save((err, userInfo: IUser) => {
                     if(err){
                         res.status(500);
                         res.json(utils.sendBadRequestResponse(err));
