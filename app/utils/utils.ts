@@ -1,5 +1,5 @@
 import {UserSession} from "../models/usersession";
-import {IErrorObject, IResponse} from "./interfaces";
+import {IErrorObject, IResponse, IUser} from "./interfaces";
 
 export const utils = {
     sendBadRequestResponse : (err: IErrorObject | Array<IErrorObject>) => {
