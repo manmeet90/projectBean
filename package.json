@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "tsdinstall": "typings install",
     "lint": "gulp tslint",
-    "postinstall": "gulp tsc"
+    "prestart": "gulp tsc"
   },
   "config": {
     "ghooks": {
