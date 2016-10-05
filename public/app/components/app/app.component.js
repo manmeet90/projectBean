@@ -9,21 +9,60 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var AuthenticationService_1 = require("../../services/AuthenticationService");
+var utils_1 = require("../../utils");
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(router, authenticationService) {
+        var _this = this;
+        this.router = router;
+        this.authenticationService = authenticationService;
         this.name = "App Component";
+        this.isLoggedIn = false;
+        this.router.events.subscribe(function (evt) {
+            // console.log(evt);
+            if (sessionStorage.getItem("isLogged")) {
+                _this.isLoggedIn = JSON.parse(sessionStorage.getItem("isLogged"));
+            }
+            if (evt.url === "/register") {
+                return;
+            }
+            if ((evt.url !== "/login") && !_this.isLoggedIn) {
+                _this.router.navigateByUrl("/login");
+            }
+            else if (evt.url === "/login" && _this.isLoggedIn) {
+                _this.router.navigateByUrl("/home");
+            }
+        });
     }
     AppComponent.prototype.ngOnInit = function () {
-        $(".button-collapse").sideNav();
+        //  $(".button-collapse").sideNav();
+    };
+    AppComponent.prototype.logout = function (evt) {
+        var _this = this;
+        evt.preventDefault();
+        utils_1.utils.showLoader();
+        this.authenticationService.logout()
+            .then(function () {
+            utils_1.utils.hideLoader();
+            sessionStorage.removeItem("loggedInUser");
+            sessionStorage.removeItem("sessionId");
+            sessionStorage.setItem("isLogged", JSON.stringify(false));
+            _this.router.navigateByUrl("/login");
+        }, function (err) {
+            utils_1.utils.hideLoader();
+            alert(err.message);
+        });
     };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: "project-bean-app",
             templateUrl: "./app.component.html",
-            styleUrls: ["./app.component.css"]
+            styleUrls: ["./app.component.css"],
+            providers: [AuthenticationService_1.AuthenticationService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.Router, AuthenticationService_1.AuthenticationService])
     ], AppComponent);
     return AppComponent;
 }());

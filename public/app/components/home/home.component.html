@@ -1,22 +1,16 @@
-<!--<div class="navbar-fixed col s12">
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Project Bean</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a routerLink="/project/new">New Project</a></li>
-            <li><a routerLink="/logout">Logout</a></li>
-            </ul>
-        </div>
-    </nav>
-</div>-->
-
 <div class="col s12">
     <div id="searchBox">
-        <div class="input-field">
-        <i class="material-icons prefix">search</i>
-        <input id="search" type="text" required>
-        <label for="search">Search Project</label>
-        </div>
+        <form class="col s12" name="searchProjectForm" [formGroup]="searchProjectForm" novalidate>
+            <div class="input-field">
+                <i class="material-icons prefix">search</i>
+                <input list="results" id="search" type="text" name="searchTerm" formControlName="searchTerm" (keyup.enter)="goToProject()" />
+                <label for="search">Search Project</label>
+            </div>
+            <datalist id="results">
+                <option *ngFor="let project of autoCompleteResults" value="{{project.projectName}}:{{project.projectId}}">
+            </datalist>
+        </form>
+        
     </div>
 </div>
 
@@ -24,7 +18,7 @@
     <h4>Newly added Projects</h4>
     <div class="recent-projects">
         <div class="row">
-            <div class="col s12 m3" *ngFor="let project of projects">
+            <div class="col s12 m3" *ngFor="let project of recentProjects">
                 <div class="card-panel amber waves-effect waves-light">
                     <div class="white-text">
                         <h5><a [routerLink]="['/project', project.projectId]"><b class="blue-text">{{project.projectName}}</b><br></a></h5>

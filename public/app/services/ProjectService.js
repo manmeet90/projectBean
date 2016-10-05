@@ -93,6 +93,25 @@ var ProjectService = (function () {
             return Promise.reject(err.json());
         });
     };
+    ProjectService.prototype.addmembersToProject = function (projectId, members) {
+        var serviceUrl = constants_1.constants.baseURL + "projects";
+        var headers = new http_1.Headers({
+            "Content-Type": "application/json",
+            "X-Session-Key": sessionStorage.getItem("sessionId")
+        });
+        var payload = {
+            projectId: projectId,
+            members: members
+        };
+        return this.http.put(serviceUrl, JSON.stringify(payload), { headers: headers })
+            .toPromise()
+            .then(function (response) {
+            return response.json();
+        })
+            .catch(function (err) {
+            return Promise.reject(err.json());
+        });
+    };
     ProjectService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

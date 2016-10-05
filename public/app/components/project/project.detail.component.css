@@ -13,3 +13,15 @@
     padding:5px 0;
     display: inline-block;
 }
+
+.resourceFile{
+    position: relative;
+}
+.resourceFile > span{
+    padding-left: 16px;
+}
+.filetypeIcon{
+    position: absolute;
+    top:2px;
+    font-size: 12px;
+}

@@ -31,7 +31,7 @@
                 <div class="collapsible-body">
                     <div *ngIf="projectDetails?.resources.length > 0">
                         <p (click)="downloadResource(resource)" style="cursor:pointer" class="blue-text" *ngFor="let resource of projectDetails?.resources">
-                            {{resource.resourceName}}
+                           <span class="resourceFile"><i class="material-icons prefix filetypeIcon">description</i> <span>{{resource.resourceName}}</span></span>
                         </p>
                     </div>
                 </div>

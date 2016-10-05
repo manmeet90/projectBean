@@ -50,6 +50,17 @@ var AuthenticationService = (function () {
             return Promise.reject(err.json());
         });
     };
+    AuthenticationService.prototype.logout = function () {
+        var logoutUrl = constants_1.constants.baseURL + "auth/logout";
+        var _headers = new http_1.Headers({ "Content-Type": "application/json", "X-Session-Key": sessionStorage.getItem("sessionId") });
+        return this.http.delete(logoutUrl, { headers: _headers })
+            .toPromise()
+            .then(function (response) {
+            return response.json();
+        }).catch(function (err) {
+            return Promise.reject(err.json());
+        });
+    };
     AuthenticationService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

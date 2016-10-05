@@ -5,6 +5,7 @@ var register_component_1 = require("../components/register/register.component");
 var home_component_1 = require("../components/home/home.component");
 var project_detail_component_1 = require("../components/project/project.detail.component");
 var resource_component_1 = require("../components/project/resource.component");
+var addmember_component_1 = require("../components/project/addmember.component");
 var appRoutes = [
     {
         path: "login",
@@ -29,6 +30,10 @@ var appRoutes = [
             {
                 path: "addresource",
                 component: resource_component_1.AddResourceComponent
+            },
+            {
+                path: "addmember",
+                component: addmember_component_1.AddProjectMemberComponent
             }
         ]
     },

@@ -6,7 +6,7 @@ import {RegisterComponent} from "../components/register/register.component";
 import {HomeComponent} from "../components/home/home.component";
 import {ProjectDetailComponent} from "../components/project/project.detail.component";
 import {AddResourceComponent} from "../components/project/resource.component";
-
+import {AddProjectMemberComponent} from "../components/project/addmember.component";
 
 const appRoutes: Routes = [
   {
@@ -32,6 +32,10 @@ const appRoutes: Routes = [
       {
           path : "addresource",
           component : AddResourceComponent
+      },
+      {
+          path: "addmember",
+          component:  AddProjectMemberComponent
       }
     ]
   },

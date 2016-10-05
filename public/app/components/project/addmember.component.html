@@ -1,0 +1,20 @@
+<h4>Add New Member</h4>
+<form class="col s12" name="addProjectMemberForm" [formGroup]="addProjectMemberForm" novalidate>
+    <div class="row">
+        <div class="input-field col s12">
+            <input list="results" id="searchmember" type="text" (keyup.enter)="addUserToList()" class="validate" name="searchmember" formControlName="searchTerm" />
+            <label for="searchmember">Search User</label>
+        </div>
+        <datalist id="results">
+            <option *ngFor="let user of autoCompleteResults" value="{{user.empName}}:{{user.employeeId}}">
+        </datalist>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="chip" *ngFor="let user of selectedUsers">{{user.empName}}<i class="close material-icons" (click)="removeUserFromSelectedList(user.employeeId)">close</i></div>
+        </div>
+    </div>
+    <div class="row">
+        <button class="waves-effect waves-light btn blue darken-1" [disabled]="addProjectMemberForm.invalid || selectedUsers.length===0" (click)="addusersToProject()">Add</button>
+    </div>
+</form>

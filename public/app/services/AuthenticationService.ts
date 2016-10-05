@@ -46,4 +46,17 @@ export class AuthenticationService {
             return Promise.reject(err.json());
         });
     }
+
+    logout(){
+        let logoutUrl = `${constants.baseURL}auth/logout`;
+       
+        let _headers = new Headers({"Content-Type": "application/json", "X-Session-Key": sessionStorage.getItem("sessionId")});
+        return this.http.delete(logoutUrl, {headers : _headers})
+        .toPromise()
+        .then( response => {
+            return response.json();
+        }).catch(err => {
+            return Promise.reject(err.json());
+        });
+    }
 }

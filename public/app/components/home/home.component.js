@@ -10,28 +10,67 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var ProjectService_1 = require("../../services/ProjectService");
+var router_1 = require("@angular/router");
+require("rxjs/add/operator/distinctUntilChanged");
+require("rxjs/add/operator/debounceTime");
+var forms_1 = require("@angular/forms");
+var SearchService_1 = require("../../services/SearchService");
 var HomeComponent = (function () {
-    function HomeComponent(projectService) {
+    function HomeComponent(fb, router, projectService, searchService) {
+        this.router = router;
         this.projectService = projectService;
+        this.searchService = searchService;
+        this.autoCompleteResults = [];
+        this.searchProjectForm = fb.group({
+            searchTerm: ""
+        });
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.projectService.getAllProjects(true)
             .then(function (response) {
-            _this.projects = response;
+            _this.recentProjects = response;
         }, function (err) {
             console.log(err);
         });
+        this.searchProjectForm.controls["searchTerm"].valueChanges
+            .debounceTime(500)
+            .distinctUntilChanged()
+            .subscribe(function (value) {
+            _this.searchProjectBySearchTerm(value);
+        });
+    };
+    HomeComponent.prototype.searchProjectBySearchTerm = function (searchTerm) {
+        var _this = this;
+        if (searchTerm) {
+            this.searchService.search(searchTerm, SearchService_1.SearchType.PROJECT_SEARCH)
+                .then(function (response) {
+                _this.autoCompleteResults = response.map(function (project) {
+                    return { projectId: project.projectId, projectName: project.projectName, id: project["id"] };
+                });
+            }, function (err) {
+                console.log(err);
+            });
+        }
+    };
+    HomeComponent.prototype.goToProject = function () {
+        if (this.searchProjectForm.controls["searchTerm"].value) {
+            var projectId_1 = this.searchProjectForm.controls["searchTerm"].value.split(":")[1];
+            var _projects = this.autoCompleteResults.filter(function (v) { return v.projectId === projectId_1; });
+            if (_projects && _projects[0]) {
+                this.router.navigateByUrl("/project/" + _projects[0].projectId);
+            }
+        }
     };
     HomeComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: "home",
             templateUrl: "./home.component.html",
-            providers: [ProjectService_1.ProjectService],
+            providers: [ProjectService_1.ProjectService, SearchService_1.SearchService],
             styleUrls: ["./home.component.css"]
         }), 
-        __metadata('design:paramtypes', [ProjectService_1.ProjectService])
+        __metadata('design:paramtypes', [forms_1.FormBuilder, router_1.Router, ProjectService_1.ProjectService, SearchService_1.SearchService])
     ], HomeComponent);
     return HomeComponent;
 }());

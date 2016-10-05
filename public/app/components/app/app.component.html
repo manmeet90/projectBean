@@ -1,21 +1,11 @@
 <div class="container-fluid">
     <div class="row">
-        <!--<div class="col s12">
-            <nav>
-                <div class="nav-wrapper">
-                <a routerLink="/home" class="brand-logo">Project Bean</a>
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="/logout">Logout</a></li>
-                    
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li><a href="/logout">Logout</a></li>
-                    
-                </ul>
-                </div>
-            </nav>
-        </div>-->
+        <header class="col s12 blue-grey white-text" *ngIf="isLoggedIn">
+            <h4 class="left projectTitle" routerLink="home">Project Bean</h4>
+            <div class="right rheader">
+                <a href="#" class="white-text" id="logoutLink" (click)="logout($event)">Logout</a>
+            </div>
+        </header>
         <router-outlet></router-outlet>
     </div>
 </div>

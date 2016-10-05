@@ -35,4 +35,3 @@ export interface IResourceModel extends mongoose.Document{
     resourceUrl : string;
     description : string;
 }
-

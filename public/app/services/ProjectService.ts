@@ -92,4 +92,24 @@ export class ProjectService {
             return Promise.reject(err.json());
         });
     }
+
+    addmembersToProject(projectId: string, members: string[]){
+        let serviceUrl = `${constants.baseURL}projects`;
+        let headers = new Headers({
+            "Content-Type": "application/json",
+            "X-Session-Key": sessionStorage.getItem("sessionId")
+        });
+        let payload = {
+            projectId : projectId,
+            members : members
+        };
+        return this.http.put(serviceUrl, JSON.stringify(payload), {headers: headers})
+        .toPromise()
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            return Promise.reject(err.json());
+        });
+    }
 }

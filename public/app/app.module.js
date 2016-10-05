@@ -18,6 +18,7 @@ var register_component_1 = require("./components/register/register.component");
 var home_component_1 = require("./components/home/home.component");
 var project_detail_component_1 = require("./components/project/project.detail.component");
 var resource_component_1 = require("./components/project/resource.component");
+var addmember_component_1 = require("./components/project/addmember.component");
 var app_routes_1 = require("./routes/app.routes");
 var AppModule = (function () {
     function AppModule() {
@@ -25,7 +26,7 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, http_1.HttpModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, app_routes_1.appRouter],
-            declarations: [app_component_1.AppComponent, login_component_1.LoginComponent, register_component_1.RegisterComponent, home_component_1.HomeComponent, project_detail_component_1.ProjectDetailComponent, resource_component_1.AddResourceComponent],
+            declarations: [app_component_1.AppComponent, login_component_1.LoginComponent, register_component_1.RegisterComponent, home_component_1.HomeComponent, project_detail_component_1.ProjectDetailComponent, resource_component_1.AddResourceComponent, addmember_component_1.AddProjectMemberComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

@@ -8,12 +8,13 @@ import {RegisterComponent} from "./components/register/register.component";
 import {HomeComponent} from "./components/home/home.component";
 import {ProjectDetailComponent} from "./components/project/project.detail.component";
 import {AddResourceComponent} from "./components/project/resource.component";
+import {AddProjectMemberComponent} from "./components/project/addmember.component";
 
 import {appRouter} from "./routes/app.routes";
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, FormsModule, ReactiveFormsModule, appRouter ],
-  declarations: [ AppComponent, LoginComponent, RegisterComponent, HomeComponent, ProjectDetailComponent, AddResourceComponent  ],
+  declarations: [ AppComponent, LoginComponent, RegisterComponent, HomeComponent, ProjectDetailComponent, AddResourceComponent, AddProjectMemberComponent  ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
