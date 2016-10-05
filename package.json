@@ -6,7 +6,7 @@
     "start": "node server.js",
     "typings": "typings",
     "tsWatch": "tsc -w",
-    "tsc": "tsc",
+    "tsc": "tsc -p tsconfig.json",
     "tsdinstall": "typings install",
     "lint": "gulp tslint",
     "prestart": "npm run tsc"
