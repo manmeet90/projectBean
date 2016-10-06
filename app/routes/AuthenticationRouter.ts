@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt-nodejs");
 import {utils} from "../utils/utils";
 import {SessionController} from "../controllers/SessionController";
 import {ILoginResponse, IUser} from "../utils/interfaces";
+const postmark = require("postmark");
 
 const SALT_ROUNDS = process.env.BCRYPT_SALT || 3;
 export const AuthenticationRouter = express.Router();
@@ -69,9 +70,9 @@ AuthenticationRouter.post("/login", (req, res) => {
     });
 });
 
-AuthenticationRouter.post("/fpassword", (req, res) => {
+AuthenticationRouter.post("/forgotpassword", (req, res) => {
     let _error = false, _errMessage = [];
-    if(!req.body.emailId){
+    if(!req.body.email){
         _error = true;
         _errMessage.push({message : "emailId parameter missing"});
     }
@@ -81,12 +82,43 @@ AuthenticationRouter.post("/fpassword", (req, res) => {
         return;
     }
 
-    User.findOne({emailId : req.body.emailId})
+    User.findOne({emailId : req.body.email})
     .exec()
-    .then((_user) =>{
+    .then((_user : IUser) =>{
         if(_user){
             // send new Password to user mail.
-            // utils.generateRandomPassword()
+            let _newPassword : string = utils.generateRandomPassword();
+            let salt = bcrypt.genSaltSync(SALT_ROUNDS);
+            let hash = bcrypt.hashSync(_newPassword, salt);
+            _user.password = hash;
+            _user.save((err) => {
+                if(err){
+                    res.status(500);
+                    res.json(utils.sendBadRequestResponse(err));
+                }else{
+
+                }
+            });
+            const client = new postmark.Client(process.env.POSTMARK_API_KEY || "17619a80-c875-449d-b948-cf3bb21dad4a");
+            
+            client.sendEmail({
+                "From": "manmeet.gupta@mobisoftinfotech.com", 
+                "To": "manmeet.gupta@mobisoftinfotech.com", 
+                "Subject": "New password for Project Bean", 
+                "TextBody": `Hi ${_user.empName},\n
+                Your new password is ${_newPassword}\n\n
+                Regards\n
+                ProjectBean Team`
+            }, function(error, success) {
+                if(error) {
+                    console.error("Unable to send via postmark: " + error.message);
+                    res.status(500);
+                    res.json(utils.sendBadRequestResponse(error));
+                }
+                res.json({message: "Sent to postmark for delivery"});
+            });
+
+            
             
         }else{
             res.status(500);

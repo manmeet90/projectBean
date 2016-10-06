@@ -21,7 +21,7 @@ export class AppComponent implements OnInit  {
         if(sessionStorage.getItem("isLogged")){
           this.isLoggedIn = JSON.parse(sessionStorage.getItem("isLogged"));
         }
-        if(evt.url === "/register"){
+        if(evt.url === "/register" || evt.url === "/forgotpassword"){
             return;
         }
         if((evt.url !== "/login") && !this.isLoggedIn){

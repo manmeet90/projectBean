@@ -4,8 +4,7 @@ var login_component_1 = require("../components/login/login.component");
 var register_component_1 = require("../components/register/register.component");
 var home_component_1 = require("../components/home/home.component");
 var project_detail_component_1 = require("../components/project/project.detail.component");
-var resource_component_1 = require("../components/project/resource.component");
-var addmember_component_1 = require("../components/project/addmember.component");
+var forgotpassword_component_1 = require("../components/forgotpassword/forgotpassword.component");
 var appRoutes = [
     {
         path: "login",
@@ -16,26 +15,17 @@ var appRoutes = [
         component: register_component_1.RegisterComponent
     },
     {
+        path: "forgotpassword",
+        component: forgotpassword_component_1.ForgotPasswordComponent
+    },
+    {
         path: "home",
         component: home_component_1.HomeComponent
     },
     {
         path: "project/:projectId",
         component: project_detail_component_1.ProjectDetailComponent,
-        children: [
-            {
-                path: "",
-                component: null
-            },
-            {
-                path: "addresource",
-                component: resource_component_1.AddResourceComponent
-            },
-            {
-                path: "addmember",
-                component: addmember_component_1.AddProjectMemberComponent
-            }
-        ]
+        loadChildren: "app/projectdetail.module.js"
     },
     {
         path: "**",

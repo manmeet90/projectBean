@@ -8,7 +8,8 @@ import {Location} from "@angular/common";
 @Component({
     moduleId: module.id,
     selector: "add-resource-form",
-    templateUrl: "resource.component.html"
+    templateUrl: "resource.component.html",
+    providers:[ProjectService]
 })
 export class AddResourceComponent implements OnInit {
     projectId: string;

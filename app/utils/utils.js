@@ -60,7 +60,7 @@ exports.utils = {
         return {};
     },
     checkForValidSessionMiddleware: function (req, res, next) {
-        var ROUTES_IGNORE = ["/auth/login", "/auth/fpassword", "/auth/profile", "/fileuploadtest"];
+        var ROUTES_IGNORE = ["/auth/login", "/auth/forgotpassword", "/auth/profile", "/fileuploadtest"];
         var sessionIdInRequest = req.get("X-Session-Key");
         var _flag = false;
         if (req.method === "OPTIONS") {

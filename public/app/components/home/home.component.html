@@ -18,7 +18,7 @@
     <h4>Newly added Projects</h4>
     <div class="recent-projects">
         <div class="row">
-            <div class="col s12 m3" *ngFor="let project of recentProjects">
+            <div class="col s12 m6 l3" *ngFor="let project of recentProjects">
                 <div class="card-panel amber waves-effect waves-light">
                     <div class="white-text">
                         <h5><a [routerLink]="['/project', project.projectId]"><b class="blue-text">{{project.projectName}}</b><br></a></h5>

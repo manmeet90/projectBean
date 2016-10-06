@@ -52,7 +52,8 @@ var AddResourceComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: "add-resource-form",
-            templateUrl: "resource.component.html"
+            templateUrl: "resource.component.html",
+            providers: [ProjectService_1.ProjectService]
         }), 
         __metadata('design:paramtypes', [common_1.Location, router_1.ActivatedRoute, ProjectService_1.ProjectService])
     ], AddResourceComponent);

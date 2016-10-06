@@ -59,4 +59,19 @@ export class AuthenticationService {
             return Promise.reject(err.json());
         });
     }
+
+    sendEmail(email : string){
+        let fpUrl = `${constants.baseURL}auth/forgotpassword`;
+        let payload = {
+            email : email,
+        };
+        let _headers = new Headers({"Content-Type": "application/json"});
+        return this.http.post(fpUrl, JSON.stringify(payload), {headers : _headers})
+        .toPromise()
+        .then( response => {
+            return response.json();
+        }).catch(err => {
+            return Promise.reject(err.json());
+        });
+    }
 }

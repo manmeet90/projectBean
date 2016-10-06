@@ -5,8 +5,7 @@ import {LoginComponent} from "../components/login/login.component";
 import {RegisterComponent} from "../components/register/register.component";
 import {HomeComponent} from "../components/home/home.component";
 import {ProjectDetailComponent} from "../components/project/project.detail.component";
-import {AddResourceComponent} from "../components/project/resource.component";
-import {AddProjectMemberComponent} from "../components/project/addmember.component";
+import {ForgotPasswordComponent} from "../components/forgotpassword/forgotpassword.component";
 
 const appRoutes: Routes = [
   {
@@ -18,26 +17,17 @@ const appRoutes: Routes = [
     component : RegisterComponent
   },
   {
+    path : "forgotpassword",
+    component : ForgotPasswordComponent
+  },
+  {
     path: "home",
     component : HomeComponent
   },
   {
     path : "project/:projectId",
     component : ProjectDetailComponent,
-    children : [
-      {
-          path: "",
-         component : null
-      },
-      {
-          path : "addresource",
-          component : AddResourceComponent
-      },
-      {
-          path: "addmember",
-          component:  AddProjectMemberComponent
-      }
-    ]
+    loadChildren : "app/projectdetail.module.js" 
   },
   {
       path : "**",

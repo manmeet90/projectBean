@@ -1,4 +1,4 @@
-<div class="col s12 m4 offset-m4">
+<div class="col s12 m12 l4 offset-l4">
     <div class="card blue-grey darken-1">
     <div class="card-content white-text">
         <span class="card-title">{{cardTitle}}</span>
@@ -58,9 +58,12 @@
         </div>
     </div>
     <div class="card-action">
-        <button class="waves-effect waves-light btn blue darken-1" [disabled]="registerForm.invalid" (click)="register()">{{btn_register_text}}</button>
-        &nbsp;&nbsp;<button class="waves-effect waves-light btn red darken-1" (click)="resetForm()">Clear</button>
-        &nbsp;&nbsp;&nbsp;<a routerLink="/login">{{lbl_goToLoginPage_link}}</a>
+        <div class="row">
+            <button class=" col s6 m3 waves-effect waves-light btn blue darken-1" [disabled]="registerForm.invalid" (click)="register()">{{btn_register_text}}</button>
+            <button class=" col s5 offset-s1 m2 offset-m1  waves-effect waves-light btn red darken-1" (click)="resetForm()">Clear</button>
+            <a class="col s12 m4 offset-m1"  style="margin-top:15px;" routerLink="/login">{{lbl_goToLoginPage_link}}</a>
+        </div>
+        
     </div>
     </div>
 </div>

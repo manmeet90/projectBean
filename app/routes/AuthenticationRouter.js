@@ -4,6 +4,7 @@ var user_1 = require("../models/user");
 var bcrypt = require("bcrypt-nodejs");
 var utils_1 = require("../utils/utils");
 var SessionController_1 = require("../controllers/SessionController");
+var postmark = require("postmark");
 var SALT_ROUNDS = process.env.BCRYPT_SALT || 3;
 exports.AuthenticationRouter = express.Router();
 exports.AuthenticationRouter.post("/login", function (req, res) {
@@ -68,9 +69,9 @@ exports.AuthenticationRouter.post("/login", function (req, res) {
         res.json(utils_1.utils.sendBadRequestResponse(err));
     });
 });
-exports.AuthenticationRouter.post("/fpassword", function (req, res) {
+exports.AuthenticationRouter.post("/forgotpassword", function (req, res) {
     var _error = false, _errMessage = [];
-    if (!req.body.emailId) {
+    if (!req.body.email) {
         _error = true;
         _errMessage.push({ message: "emailId parameter missing" });
     }
@@ -79,10 +80,37 @@ exports.AuthenticationRouter.post("/fpassword", function (req, res) {
         res.json(utils_1.utils.sendBadRequestResponse(_errMessage));
         return;
     }
-    user_1.User.findOne({ emailId: req.body.emailId })
+    user_1.User.findOne({ emailId: req.body.email })
         .exec()
         .then(function (_user) {
         if (_user) {
+            // send new Password to user mail.
+            var _newPassword = utils_1.utils.generateRandomPassword();
+            var salt = bcrypt.genSaltSync(SALT_ROUNDS);
+            var hash = bcrypt.hashSync(_newPassword, salt);
+            _user.password = hash;
+            _user.save(function (err) {
+                if (err) {
+                    res.status(500);
+                    res.json(utils_1.utils.sendBadRequestResponse(err));
+                }
+                else {
+                }
+            });
+            var client = new postmark.Client(process.env.POSTMARK_API_KEY || "17619a80-c875-449d-b948-cf3bb21dad4a");
+            client.sendEmail({
+                "From": "manmeet.gupta@mobisoftinfotech.com",
+                "To": "manmeet.gupta@mobisoftinfotech.com",
+                "Subject": "New password for Project Bean",
+                "TextBody": "Hi " + _user.empName + ",\n\n                Your new password is " + _newPassword + "\n\n\n                Regards\n\n                ProjectBean Team"
+            }, function (error, success) {
+                if (error) {
+                    console.error("Unable to send via postmark: " + error.message);
+                    res.status(500);
+                    res.json(utils_1.utils.sendBadRequestResponse(error));
+                }
+                res.json({ message: "Sent to postmark for delivery" });
+            });
         }
         else {
             res.status(500);

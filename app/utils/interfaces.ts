@@ -26,6 +26,7 @@ export interface IUser extends mongoose.Document{
     emailId: string;
     jobTitle : string;
     contactNumber: string;
+    password : string;
 }
 
 export interface IResourceModel extends mongoose.Document{

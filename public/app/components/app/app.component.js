@@ -24,7 +24,7 @@ var AppComponent = (function () {
             if (sessionStorage.getItem("isLogged")) {
                 _this.isLoggedIn = JSON.parse(sessionStorage.getItem("isLogged"));
             }
-            if (evt.url === "/register") {
+            if (evt.url === "/register" || evt.url === "/forgotpassword") {
                 return;
             }
             if ((evt.url !== "/login") && !_this.isLoggedIn) {
