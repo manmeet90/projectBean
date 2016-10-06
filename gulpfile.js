@@ -1,5 +1,6 @@
 var gulp = require("gulp");
 var tslint = require("gulp-tslint");
+var plato = require('gulp-plato');
 
 var typescript = require('gulp-tsc');
  
@@ -30,3 +31,8 @@ gulp.task("tslint", () =>
     }))
     .pipe(tslint.report())
 );
+
+gulp.task('plato', function () {
+    return gulp.src(["app/**/*.js","app/*.js","public/app/**/*.js","public/app/*.js"])
+        .pipe(plato('../report'));
+});

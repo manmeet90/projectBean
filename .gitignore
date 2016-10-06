@@ -17,3 +17,4 @@ node_modules/
 typings/*/*
 *.map
 /tmp
+reports/
