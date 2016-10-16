@@ -99,7 +99,7 @@ AuthenticationRouter.post("/forgotpassword", (req, res) => {
 
                 }
             });
-            const client = new postmark.Client(process.env.POSTMARK_API_KEY || "17619a80-c875-449d-b948-cf3bb21dad4a");
+            const client = new postmark.Client(process.env.POSTMARK_API_KEY);
             
             client.sendEmail({
                 "From": "manmeet.gupta@mobisoftinfotech.com", 
