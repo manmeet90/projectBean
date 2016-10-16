@@ -9,7 +9,8 @@
     "tsc": "tsc -p tsconfig.json",
     "tsdinstall": "typings install",
     "lint": "gulp tslint",
-    "plato" : "gulp plato"
+    "plato" : "gulp plato",
+    "postinstall": "typings install"
   },
   "config": {
     "ghooks": {
