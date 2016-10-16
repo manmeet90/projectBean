@@ -1,8 +1,3 @@
 {
-    "awsConfig": { 
-        "accessKeyId": "AKIAJG4Z77MEWE6HPJAQ",
-        "secretAccessKey": "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",
-        "region": "us-east-1"
-    },
-    "momgoDBConnectionUrl" : "mongodb://heroku_65mb5xq1:om1ogr9ot3fp8f6e4607otalar@ds047666.mlab.com:47666/heroku_65mb5xq1"
+    "momgoDBConnectionUrl" : "*"
 }
